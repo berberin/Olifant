@@ -32,6 +32,8 @@ To rebuild auto-generated code:
 flutter pub run build_runner build
 ```
 
+The file google-services.json in android/app/src and ios/Runner are connected to a Firebase application that we only use for development. Please replace it with google-services.json from your firebase app.
+
 A few resources to get you started:
 
 - [(Flutter) Build and release an iOS app](https://flutter.dev/docs/deployment/ios)
