@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "266894939607",
+    "firebase_url": "https://shofar-64fc7.firebaseio.com",
+    "project_id": "shofar-64fc7",
+    "storage_bucket": "shofar-64fc7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266894939607:android:078d06890e54069c756792",
+        "android_client_info": {
+          "package_name": "xyz.vertempire.shofar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266894939607-0fbdtbciaokb9vohufd2ursh3re2oij2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDS1zpyG-39RQF3BEUT01r2r_N2PsGIQRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266894939607-0fbdtbciaokb9vohufd2ursh3re2oij2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
