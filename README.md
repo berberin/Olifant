@@ -36,6 +36,7 @@ The file google-services.json in android/app/src and ios/Runner are connected to
 
 A few resources to get you started:
 
+- [Project on Devpost](https://devpost.com/software/shofar)
 - [(Flutter) Build and release an iOS app](https://flutter.dev/docs/deployment/ios)
 - [Video demo](https://youtu.be/bed2pQpXq4I)
 
