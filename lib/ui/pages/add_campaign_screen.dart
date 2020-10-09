@@ -90,8 +90,6 @@ class _AddCampaignScreenState extends State<AddCampaignScreen> {
                     height: 10,
                   ),
                   TextForm(
-                    hintText:
-                        "https://raw.githubusercontent.com/berberin/Olifant/master/images/3081648.jpg",
                     labelText: "Enter an image's URL",
                     controller: imageUrlCtrl,
                   ),
@@ -173,7 +171,7 @@ class _AddCampaignScreenState extends State<AddCampaignScreen> {
                           borderRadius: BorderRadius.circular(18.0),
                         ),
                         child: Text(
-                          "START",
+                          "START CAMPAIGN",
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.w500,
@@ -226,7 +224,7 @@ class _AddCampaignScreenState extends State<AddCampaignScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 20,
+                    height: 40,
                   ),
                 ],
               ),

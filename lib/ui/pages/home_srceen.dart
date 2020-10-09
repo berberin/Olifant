@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontWeight: FontWeight.w600,
                                 color: priText,
                               ),
-                            )
+                            ),
                           ]),
                           onPressed: () => showNormalDialog(
                             context: context,
@@ -184,12 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         searchTextCtrl.text == '') {
                       return;
                     }
-                    List<String> res =
-                        await campaignProvider.searchTitle(searchTextCtrl.text);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
                       return SearchResultScreen(
-                        campaigns: res,
+                        keyword: searchTextCtrl.text,
                       );
                     }));
                   },
@@ -203,12 +201,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Divider(),
             CampaignClusterOnBoard(
-              title: "My contribute",
+              title: "My Contributions",
               future: myContribute,
             ),
             Divider(),
             CampaignClusterOnBoard(
-              title: "Top Campaigns",
+              title: "Latest Campaigns",
               future: campaigns,
             ),
           ],

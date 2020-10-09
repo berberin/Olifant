@@ -120,12 +120,14 @@ class _CampaignDetailScreenState extends State<CampaignDetailScreen> {
                         animation: true,
                         lineHeight: 5.0,
                         animationDuration: 1500,
-                        percent: (widget.campaign.currentFund /
-                                    widget.campaign.targetFund) <=
-                                1
-                            ? widget.campaign.currentFund /
-                                widget.campaign.targetFund
-                            : 1,
+                        percent: widget.campaign.completed
+                            ? 1
+                            : (widget.campaign.currentFund /
+                                        widget.campaign.targetFund) <=
+                                    1
+                                ? widget.campaign.currentFund /
+                                    widget.campaign.targetFund
+                                : 1,
                         linearStrokeCap: LinearStrokeCap.roundAll,
                         progressColor: widget.campaign.completed
                             ? Colors.green[400]
@@ -140,15 +142,19 @@ class _CampaignDetailScreenState extends State<CampaignDetailScreen> {
                           miniWidget(
                             icon: Icons.monetization_on,
                             boldText: widget.campaign.completed
-                                ? fundToDisplay(
-                                    widget.campaign.currentFund.toDouble() /
-                                        (pow(10, 18)))
+                                ? widget.campaign.currentFund > 0
+                                    ? fundToDisplay(
+                                        widget.campaign.currentFund.toDouble() /
+                                            (pow(10, 18)))
+                                    : '---'
                                 : fundToDisplay((widget.campaign.targetFund -
                                             widget.campaign.currentFund)
                                         .toDouble() /
                                     (pow(10, 18))),
                             subText: widget.campaign.completed
-                                ? "Total"
+                                ? widget.campaign.currentFund > 0
+                                    ? "Total"
+                                    : "Claimed"
                                 : "ONE to finish",
                             textTheme: Theme.of(context).textTheme,
                           ),
@@ -162,12 +168,19 @@ class _CampaignDetailScreenState extends State<CampaignDetailScreen> {
                           ),
                           miniWidget(
                             icon: Icons.access_time,
-                            boldText: daysRemaining(widget.campaign.due) >= 0
-                                ? daysRemaining(widget.campaign.due).toString()
-                                : "Time up",
+                            boldText: widget.campaign.completed
+                                ? '---'
+                                : daysRemaining(widget.campaign.due) >= 0
+                                    ? daysRemaining(widget.campaign.due)
+                                        .toString()
+                                    : "Time up",
                             subText: daysRemaining(widget.campaign.due) >= 0
-                                ? "Days to go"
-                                : "Failed",
+                                ? widget.campaign.completed
+                                    ? "Success"
+                                    : "Days to go"
+                                : widget.campaign.completed
+                                    ? "Success"
+                                    : "Failed",
                             textTheme: Theme.of(context).textTheme,
                           ),
                         ],
@@ -214,26 +227,40 @@ class _CampaignDetailScreenState extends State<CampaignDetailScreen> {
                       SizedBox(
                         height: 20,
                       ),
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           widget.campaign.completed
                               ? RaisedButton(
                                   disabledColor: Colors.green[300],
-                                  child: Text("SUCCESS!"),
+                                  child: Text(
+                                    "SUCCESS!",
+                                    style: TextStyle(fontSize: 35),
+                                  ),
                                 )
                               : (daysRemaining(widget.campaign.due) < 0)
                                   ? RaisedButton(
                                       disabledColor: Colors.red[300],
-                                      child: Text("FAIL"),
+                                      child: Text(
+                                        "   FAIL!   ",
+                                        style: TextStyle(fontSize: 35),
+                                      ),
                                     )
                                   : Container(),
+                          SizedBox(
+                            height: 20,
+                          ),
                           (widget.campaign.completed &&
                                   widget.campaign.owner ==
-                                      WalletProvider.address)
+                                      WalletProvider.address &&
+                                  widget.campaign.currentFund > 0)
                               ? RaisedButton(
                                   color: secText,
-                                  child: Text("CLAIM"),
+                                  child: Text("      CLAIM      "),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
                                   onPressed: () async {
                                     showLoadingDialog(context);
                                     bool res;
@@ -262,7 +289,6 @@ class _CampaignDetailScreenState extends State<CampaignDetailScreen> {
                                             child: Text("OK"),
                                             onPressed: () {
                                               Navigator.pop(context);
-                                              Navigator.pop(context);
                                             },
                                           )
                                         ],
@@ -279,6 +305,9 @@ class _CampaignDetailScreenState extends State<CampaignDetailScreen> {
                                           .contains(WalletProvider.address)))
                               ? RaisedButton(
                                   color: secText,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                  ),
                                   child: Text("GET BACK MY MONEY"),
                                   onPressed: () async {
                                     showLoadingDialog(context);
@@ -319,6 +348,7 @@ class _CampaignDetailScreenState extends State<CampaignDetailScreen> {
                               : Container(),
                         ],
                       ),
+                      SizedBox(height: 10),
                       Text(
                         "About this project",
                         style: Theme.of(context).textTheme.headline4,

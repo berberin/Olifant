@@ -128,12 +128,15 @@ class _CampaignOnBoardState extends State<CampaignOnBoard> {
                                   animation: true,
                                   lineHeight: 5.0,
                                   animationDuration: 1500,
-                                  percent: (campaignSnap.data.currentFund /
-                                              campaignSnap.data.targetFund) <=
-                                          1
-                                      ? campaignSnap.data.currentFund /
-                                          campaignSnap.data.targetFund
-                                      : 1,
+                                  percent: campaignSnap.data.completed
+                                      ? 1
+                                      : (campaignSnap.data.currentFund /
+                                                  campaignSnap
+                                                      .data.targetFund) <=
+                                              1
+                                          ? campaignSnap.data.currentFund /
+                                              campaignSnap.data.targetFund
+                                          : 1,
                                   linearStrokeCap: LinearStrokeCap.roundAll,
                                   progressColor: campaignSnap.data.completed
                                       ? Colors.green[400]
@@ -149,10 +152,12 @@ class _CampaignOnBoardState extends State<CampaignOnBoard> {
                                     miniWidget(
                                       icon: Icons.monetization_on,
                                       boldText: campaignSnap.data.completed
-                                          ? fundToDisplay(campaignSnap
-                                                  .data.currentFund
-                                                  .toDouble() /
-                                              (pow(10, 18)))
+                                          ? campaignSnap.data.currentFund > 0
+                                              ? fundToDisplay(campaignSnap
+                                                      .data.currentFund
+                                                      .toDouble() /
+                                                  (pow(10, 18)))
+                                              : '---'
                                           : fundToDisplay(
                                               (campaignSnap.data.targetFund -
                                                           campaignSnap
@@ -160,7 +165,9 @@ class _CampaignOnBoardState extends State<CampaignOnBoard> {
                                                       .toDouble() /
                                                   (pow(10, 18))),
                                       subText: campaignSnap.data.completed
-                                          ? "Total"
+                                          ? campaignSnap.data.currentFund > 0
+                                              ? "Total"
+                                              : "Claimed"
                                           : "ONE to finish",
                                       textTheme: Theme.of(context).textTheme,
                                     ),
@@ -174,16 +181,21 @@ class _CampaignOnBoardState extends State<CampaignOnBoard> {
                                     ),
                                     miniWidget(
                                       icon: Icons.access_time,
-                                      boldText: daysRemaining(
-                                                  campaignSnap.data.due) >=
-                                              0
-                                          ? daysRemaining(campaignSnap.data.due)
-                                              .toString()
-                                          : "Time up",
+                                      boldText: campaignSnap.data.completed
+                                          ? '---'
+                                          : daysRemaining(
+                                                      campaignSnap.data.due) >=
+                                                  0
+                                              ? daysRemaining(
+                                                      campaignSnap.data.due)
+                                                  .toString()
+                                              : "Time up",
                                       subText: daysRemaining(
                                                   campaignSnap.data.due) >=
                                               0
-                                          ? "Days to go"
+                                          ? campaignSnap.data.completed
+                                              ? "Success"
+                                              : "Days to go"
                                           : campaignSnap.data.completed
                                               ? "Success"
                                               : "Fail",
